@@ -46,10 +46,6 @@ cp .env.example .env
 ```bash
 php artisan key:generate
 ```
-### 5. Генерация ключа приложения
-```bash
-php artisan key:generate
-```
 ### 6. Запуск сервера разработки
 ```bash
 php artisan serve
