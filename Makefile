@@ -7,8 +7,6 @@ up:
 	docker-compose up -d
 	docker-compose exec php-fpm composer install
 	docker-compose exec php-fpm npm install
-	docker-compose exec php-fpm sh -c chown -R www-data:www-data /var/www/storage 
-	docker-compose exec php-fpm sh -c chmod -R 775 /var/www/storage
 	docker-compose exec php-fpm php artisan l5-swagger:generate
 
 .PHONY: stop

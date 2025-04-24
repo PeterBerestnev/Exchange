@@ -32,14 +32,6 @@ class ExchangeController extends Controller
      *     summary="Get the latest exchange rates",
      *     description="Returns the latest exchange rates for the specified base currency.",
      *     @OA\Parameter(
-     *         name="app_id",
-     *         in="query",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *         example="",
-     *         description="API key from OpenExchangeRates"
-     *     ),
-     *     @OA\Parameter(
      *         name="base",
      *         in="query",
      *         required=false,
