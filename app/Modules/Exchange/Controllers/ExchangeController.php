@@ -8,6 +8,9 @@ use App\Modules\Exchange\Resources\ExchangeLatestResource;
 use App\Modules\Exchange\Requests\ExchangeRequest;
 use App\Modules\Exchange\Services\ExchangeService;
 
+/**
+ * Contains methods to interact with OpenExchangeApi
+ */
 class ExchangeController extends Controller
 {
     protected $exchangeService;
@@ -16,7 +19,6 @@ class ExchangeController extends Controller
      * Constructor for ExchangeController
      *
      * @param ExchangeService         $exchangeService Service for ExchangeController
-     * @param BaseExchangeClient|null $client          Optional client for the exchange service
      */
     public function __construct(ExchangeService $exchangeService)
     {
@@ -24,12 +26,54 @@ class ExchangeController extends Controller
     }
 
     /**
-     * Talks to exchange api by "latest" endpoint
-     *
-     * @param ExchangeRequest $request contains request params
-     *
-     * @return JsonResponse response resource
-     **/
+     * @OA\Get(
+     *     path="/api/exchange/latest",
+     *     tags={"Exchange"},
+     *     summary="Get the latest exchange rates",
+     *     description="Returns the latest exchange rates for the specified base currency.",
+     *     @OA\Parameter(
+     *         name="app_id",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *         example="",
+     *         description="API key from OpenExchangeRates"
+     *     ),
+     *     @OA\Parameter(
+     *         name="base",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(ref="#/components/schemas/ExchangeLatestRequest/properties/base")
+     *     ),
+     *     @OA\Parameter(
+     *         name="symbols",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(ref="#/components/schemas/ExchangeLatestRequest/properties/symbols")
+     *     ),
+     *     @OA\Parameter(
+     *         name="prettyprint",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(ref="#/components/schemas/ExchangeLatestRequest/properties/prettyprint")
+     *     ),
+     *     @OA\Parameter(
+     *         name="show_alternative",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(ref="#/components/schemas/ExchangeLatestRequest/properties/show_alternative")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(ref="#/components/schemas/ExchangeLatestResource")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     )
+     * )
+     */
     public function latest(ExchangeRequest $request)
     {
         $data = $request->validated();
