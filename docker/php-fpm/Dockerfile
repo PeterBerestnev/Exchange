@@ -1,27 +1,29 @@
 FROM php:8.2-fpm
 
-# Установка Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Установка Node.js и npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Установка необходимых пакетов
 RUN apt-get update \
     && apt-get install -y \
-    libzip-dev \
-    libgd-dev \
-    libcurl4-openssl-dev \
-    pkg-config \
-    libssl-dev \
-    libmagickwand-dev \
-    nodejs \  # Добавляем Node.js (включает npm)
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
+        libzip-dev \      
+        libssl-dev \      
     && docker-php-ext-install \
-    zip \
-    gd \
-    exif \
-    intl
+        zip \              
+        opcache \          
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www
+
+COPY ./ ./
+
+RUN composer install
+RUN npm install
+RUN php artisan key:generate
+RUN php artisan l5-swagger:generate
+
+RUN chmod -R 777 /var/www/storage && chmod -R 777 /var/www/bootstrap/cache
