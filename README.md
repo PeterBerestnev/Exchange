@@ -19,7 +19,6 @@
 
 - Docker Compose
 
-- Make (обычно предустановлен в Linux/macOS)
 
 # Быстрый старт
 
