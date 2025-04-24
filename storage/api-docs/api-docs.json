@@ -1,0 +1,146 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Currency Exchange API",
+        "description": "API for retrieving currency exchange rates",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/exchange/latest": {
+            "get": {
+                "tags": [
+                    "Exchange"
+                ],
+                "summary": "Get the latest exchange rates",
+                "description": "Returns the latest exchange rates for the specified base currency.",
+                "operationId": "073970ccc0048c0233882357085ef41d",
+                "parameters": [
+                    {
+                        "name": "app_id",
+                        "in": "query",
+                        "description": "API key from OpenExchangeRates",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Your app key"
+                    },
+                    {
+                        "name": "base",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/ExchangeLatestRequest/properties/base"
+                        }
+                    },
+                    {
+                        "name": "symbols",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/ExchangeLatestRequest/properties/symbols"
+                        }
+                    },
+                    {
+                        "name": "prettyprint",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/ExchangeLatestRequest/properties/prettyprint"
+                        }
+                    },
+                    {
+                        "name": "show_alternative",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/ExchangeLatestRequest/properties/show_alternative"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExchangeLatestResource"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ExchangeLatestRequest": {
+                "properties": {
+                    "base": {
+                        "description": "Базовая валюта для конвертации",
+                        "type": "string",
+                        "example": "USD"
+                    },
+                    "symbols": {
+                        "description": "Список символов для фильтрации, разделенный запятыми",
+                        "type": "string",
+                        "example": "USD,RUB"
+                    },
+                    "prettyprint": {
+                        "description": "Флаг для форматирования ответа (допустимые значения: 'true' или 'false')",
+                        "type": "string",
+                        "example": "true"
+                    },
+                    "show_alternative": {
+                        "description": "Флаг для отображения альтернативных курсов (допустимые значения: 'true' или 'false')",
+                        "type": "string",
+                        "example": "false"
+                    }
+                },
+                "type": "object"
+            },
+            "ExchangeLatestResource": {
+                "required": [
+                    "timestamp",
+                    "base",
+                    "rates"
+                ],
+                "properties": {
+                    "timestamp": {
+                        "description": "Timestamp of the exchange rates",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1633072800
+                    },
+                    "base": {
+                        "description": "Base currency for the exchange rates",
+                        "type": "string",
+                        "example": "USD"
+                    },
+                    "rates": {
+                        "description": "Exchange rates for the base currency",
+                        "type": "object",
+                        "additionalProperties": [
+                            {
+                                "description": "Exchange rate for the currency",
+                                "type": "number",
+                                "format": "float"
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Exchange",
+            "description": "Exchange"
+        }
+    ]
+}
