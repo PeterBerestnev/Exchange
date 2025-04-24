@@ -40,15 +40,11 @@ cp .env.example .env
 
 Ключ можно получить при регистрации по ссылке https://openexchangerates.org/signup/free
 
-### 3. Генерация ключа приложения
-```bash
-php artisan key:generate
-```
-### 4. Управление проектом 
+### 3. Управление проектом 
 
 Cборка контейнеров
 ```bash
-make build
+docker compose build
 ```
 
 Запуск контейнеров
