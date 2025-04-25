@@ -59,8 +59,6 @@ docker compose stop
 docker compose rm
 ```
 
-*Полный список команд доступен в Makefile.*
-
 # Тестирование API
 После запуска документация доступна по адресу:
 http://localhost:8080/api/documentation
